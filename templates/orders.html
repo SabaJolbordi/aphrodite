@@ -1,0 +1,92 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h2>Orders</h2>
+
+  {% if orders %}
+    <div class="table-responsive">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Order ID</th>
+            <th>User</th>
+            <th>Email</th> <!-- Add a column for the email -->
+            <th>Product</th>
+            <th>Price</th>
+            <th>Image</th>
+            <th>Order Time</th>  <!-- Added column for order time -->
+            <th>Actions</th>  <!-- Added column for actions like delete -->
+          </tr>
+        </thead>
+        <tbody>
+          {% for order in orders %}
+            <tr>
+              <td>{{ order.id }}</td>
+              <td>{{ order.user.username }}</td>
+              <td>{{ order.user.email }}</td>
+              <td>{{ order.product.title }}</td>
+              <td>{{ order.product.price }}</td>
+              <td>
+                {% if order.product.image_url %}
+                  <img src="{{ order.product.image_url }}" alt="{{ order.product.title }}" style="width: 100px; height: auto;">
+                {% else %}
+                  <p>No image available</p>
+                {% endif %}
+              </td>
+              <td>{{ order.created_at.strftime('%Y-%m-%d %H:%M:%S') }}</td> <!-- Display order creation time -->
+              <td>
+                <form action="{{ url_for('delete_order', order_id=order.id) }}" method="POST">
+                  <button type="submit" class="btn btn-danger btn-sm">Delete</button> <!-- Delete button -->
+                </form>
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  {% else %}
+    <p>No orders found.</p>
+  {% endif %}
+{% endblock %}
+
+<!-- Custom Styles for Mobile -->
+<style>
+  /* Ensure the table is scrollable on smaller screens */
+  .table-responsive {
+    -webkit-overflow-scrolling: touch;
+    overflow-x: auto;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  /* Adjust column text alignment */
+  td, th {
+    text-align: center;
+  }
+
+  /* Adjust button size on smaller screens */
+  .btn-sm {
+    font-size: 12px;
+    padding: 5px 10px;
+  }
+
+  /* Reduce image size in the image column for better responsiveness */
+  td img {
+    max-width: 80px;
+    max-height: 80px;
+  }
+
+  /* Styling for empty cells like "No image available" */
+  td p {
+    font-size: 0.9rem;
+    color: #888;
+  }
+
+  /* Adjust table header font size */
+  th {
+    font-size: 0.9rem;
+  }
+</style>

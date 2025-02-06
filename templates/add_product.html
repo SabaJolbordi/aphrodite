@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+
+{% block title %}Add New Product{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="mb-4 text-center text-primary">Add New Product</h2>
+
+    <form action="{{ url_for('add_product') }}" method="POST" enctype="multipart/form-data" class="shadow-lg p-4 rounded bg-light">
+        <!-- Product Title -->
+        <div class="mb-4">
+            <label for="title" class="form-label fw-bold">Product Title</label>
+            <input type="text" class="form-control shadow-sm" id="title" name="title" placeholder="Enter product title" required>
+        </div>
+
+        <!-- Product Description -->
+        <div class="mb-4">
+            <label for="description" class="form-label fw-bold">Product Description</label>
+            <textarea class="form-control shadow-sm" id="description" name="description" rows="4" placeholder="Enter product description" required></textarea>
+        </div>
+
+        <!-- Product Price -->
+        <div class="mb-4">
+            <label for="price" class="form-label fw-bold">Price</label>
+            <input type="number" step="0.01" class="form-control shadow-sm" id="price" name="price" placeholder="Enter product price" required>
+        </div>
+
+        <!-- Product Image URL -->
+        <div class="mb-4">
+            <label for="image_url" class="form-label fw-bold">Product Image URL</label>
+            <input type="url" class="form-control shadow-sm" id="image_url" name="image_url" placeholder="Enter product image URL" required>
+        </div>
+
+        <!-- Additional Images -->
+        <div class="mb-4">
+            <label for="additional_images" class="form-label fw-bold">Additional Images (comma-separated URLs)</label>
+            <textarea class="form-control shadow-sm" id="additional_images" name="additional_images" rows="2" placeholder="Enter additional image URLs separated by commas"></textarea>
+            <div class="form-text">
+                Example: <code>image1.jpg, image2.jpg, image3.jpg</code>
+            </div>
+        </div>
+
+        <!-- Category Dropdown -->
+ <!-- Category Dropdown -->
+<div class="mb-4">
+    <label for="category" class="form-label fw-bold">Category</label>
+    <select class="form-select shadow-sm" id="category" name="category" required>
+        <option value="" disabled selected>Select a category</option>
+        <option value="Dress">Dress</option>
+        <option value="Co-Ords">Co-Ords</option>
+        <option value="Blouses">Blouses</option>
+        <option value="Pants">Pants</option>
+        <option value="Jeans">Jeans</option>
+        <option value="Beachwear">Beachwear</option>
+        <option value="Jacket">Jacket</option>
+        <option value="Skirt">Skirt</option>
+        <option value="Jumpsuit">Jumpsuit</option>
+        <option value="Plus Size Dress">Plus Size Dress</option>
+        <option value="Plus Size Co-Ords">Plus Size Co-Ords</option>
+        <option value="Plus Size Blouses">Plus Size Blouses</option>
+        <option value="Plus Size Pants">Plus Size Pants</option>
+        <option value="Plus Size Jeans">Plus Size Jeans</option>
+        <option value="Plus Size Beachwear">Plus Size Beachwear</option>
+        <option value="Plus Size Jacket">Plus Size Jacket</option>
+        <option value="Plus Size Skirt">Plus Size Skirt</option>
+        <option value="Plus Size Jumpsuit">Plus Size Jumpsuit</option>
+    </select>
+</div>
+
+
+        <!-- Submit Button -->
+        <div class="d-grid gap-2 mb-4">
+            <button type="submit" class="btn btn-primary btn-lg shadow-sm">Add Product</button>
+        </div>
+    </form>
+
+    <!-- Success or Error Message -->
+    {% if error_message %}
+        <div class="alert alert-danger mt-4 text-center">
+            <strong>Error:</strong> {{ error_message }}
+        </div>
+    {% elif request.method == 'POST' %}
+        <div class="alert alert-success mt-4 text-center">
+            <strong>Success!</strong> Product added successfully!
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

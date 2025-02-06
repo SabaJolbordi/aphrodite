@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Product Store{% endblock %}</title>
+    <!-- FontAwesome Icons and Bootstrap 5 CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* General styles */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f8f9fa;
+        }
+
+        .product-card {
+            margin: 20px 0;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            background-color: #ffffff;
+        }
+
+        .product-card img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .product-card-body {
+            padding: 15px;
+        }
+
+        .product-card-body h5 {
+            font-size: 1.25rem;
+            color: #333;
+            font-weight: bold;
+        }
+
+        .product-card-body p {
+            font-size: 1rem;
+            color: #6c757d;
+        }
+
+        .carousel-inner img {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+        }
+
+        footer {
+            background-color: #343a40;
+            color: white;
+            text-align: center;
+            padding: 25px 0;
+            font-size: 0.9rem;
+        }
+
+        .logo {
+            width: 60px;
+            height: 60px;
+            border-radius: 100%;
+        }
+
+        .navbar {
+            padding: 1rem 1.5rem;
+            background-color: #212529;
+        }
+
+        .nav-link {
+            font-size: 1.1rem;
+            padding: 0.75rem;
+            transition: color 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: #f8f9fa !important;
+        }
+
+        .navbar-brand img {
+            max-height: 40px;
+            transition: transform 0.3s ease;
+        }
+
+        .navbar-brand img:hover {
+            transform: scale(1.05);
+        }
+
+        .search-input {
+            width: 300px;
+        }
+
+        .btn-outline-light:hover {
+            background-color: #f8f9fa;
+            color: #212529;
+        }
+
+        .footer-links a {
+            color: #fff;
+            margin: 0 10px;
+            text-decoration: none;
+            font-size: 1rem;
+            transition: transform 0.3s ease, font-size 0.3s ease, color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            transform: scale(1.2); /* Scale the link on hover */
+            color: #007bff; /* Change color to blue on hover */
+        }
+
+        .social-icons a {
+            color: #6c757d; /* Set icons to grey */
+            font-size: 24px;
+            margin: 0 15px;
+            transition: color 0.3s ease;
+        }
+
+        .social-icons a:hover {
+            color: #007bff; /* Blue color on hover */
+        }
+
+        /* Active link color */
+        .navbar-nav .nav-item .nav-link.active {
+            color: #ffffff !important; /* Make the active link white */
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .navbar-nav {
+                text-align: center;
+            }
+            .search-input {
+                width: 250px;
+            }
+            footer {
+                font-size: 0.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Navigation Bar -->
+<nav class="navbar navbar-expand-lg navbar-dark shadow-sm">
+    <div class="container-fluid">
+        <!-- Logo -->
+        <a class="navbar-brand" href="/">
+            Aphrodite.ge
+        </a>
+
+        <!-- Navbar Toggler (Mobile View) -->
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- Navbar Links -->
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="/">მთავარი</a>
+                </li>
+
+                <!-- Categories Dropdown -->
+                {% if current_user.is_authenticated and current_user.role == 'admin' %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('add_product') }}">Add Product</a>
+                    </li>
+                {% endif %}
+                <li class="nav-item">
+                    <a class="nav-link" href="/about">ჩვენ შესახებ</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/contact">კონტაქტი</a>
+                </li>
+                {% if current_user.is_authenticated and current_user.role == 'admin' %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="/orders">შეკვეთები</a>
+                    </li>
+                {% endif %}
+                {% if current_user.is_authenticated %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="/logout">გამოსვლა</a>
+                    </li>
+                {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="/login">შესვლა</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/register">რეგისტრაცია</a>
+                    </li>
+                {% endif %}
+            </ul>
+
+            <!-- Search Form -->
+            <form class="d-flex ms-3" action="{{ url_for('search') }}" method="GET">
+                <input class="form-control search-input" type="text" placeholder="პროდუქტების ძებნა..." name="query" value="{{ request.args.get('query', '') }}">
+                <button class="btn btn-outline-light ms-2" type="submit"><i class="fas fa-search"></i></button>
+            </form>
+        </div>
+    </div>
+</nav>
+
+{% block content %}{% endblock %}
+
+<!-- Footer -->
+<footer>
+    <div class="container text-center">
+        <p>&copy; 2025 aphrodite.ge. ყველა უფლება დაცულია</p>
+        <div class="footer-links">
+            <a href="/about">ჩვენ შესახებ</a> |
+            <a href="/contact">კონტაქტი</a>
+        </div>
+        <div class="social-icons mt-3">
+            <a href="https://www.facebook.com/profile.php?id=100064282443128"><i class="fab fa-facebook-f"></i></a>
+            <a href="https://www.instagram.com"><i class="fab fa-instagram"></i></a>
+        </div>
+    </div>
+</footer>
+
+<!-- Bootstrap 5 JavaScript and Dependencies -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

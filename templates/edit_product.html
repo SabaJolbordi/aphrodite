@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+{% block title %}Edit Product{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1 class="mb-4 text-center text-primary">Edit Product</h1>
+
+    <form method="POST" class="shadow-lg p-4 rounded bg-light">
+        <!-- Product Title -->
+        <div class="mb-4">
+            <label for="title" class="form-label fw-bold">Title</label>
+            <input type="text" class="form-control shadow-sm" id="title" name="title" value="{{ product.title }}" required>
+        </div>
+
+        <!-- Product Description -->
+        <div class="mb-4">
+            <label for="description" class="form-label fw-bold">Description</label>
+            <textarea class="form-control shadow-sm" id="description" name="description" rows="4" required>{{ product.description }}</textarea>
+        </div>
+
+        <!-- Product Price -->
+        <div class="mb-4">
+            <label for="price" class="form-label fw-bold">Price</label>
+            <input type="number" step="0.01" class="form-control shadow-sm" id="price" name="price" value="{{ product.price }}" required>
+        </div>
+
+        <!-- Main Product Image URL -->
+        <div class="mb-4">
+            <label for="image_url" class="form-label fw-bold">Main Image URL</label>
+            <input type="text" class="form-control shadow-sm" id="image_url" name="image_url" value="{{ product.image_url }}" required>
+        </div>
+
+        <!-- Additional Images -->
+        <div class="mb-4">
+            <label for="additional_images" class="form-label fw-bold">Additional Images (comma-separated URLs)</label>
+            <textarea class="form-control shadow-sm" id="additional_images" name="additional_images" rows="2">{{ product.additional_images }}</textarea>
+            <div class="form-text">
+                Enter image URLs separated by commas. Example: <code>image1.jpg, image2.jpg</code>
+            </div>
+        </div>
+
+        <!-- Submit Button -->
+        <div class="d-grid gap-2 mb-4">
+            <button type="submit" class="btn btn-primary btn-lg shadow-sm">Save Changes</button>
+        </div>
+    </form>
+
+    <!-- Success or Error Message -->
+    {% if error_message %}
+        <div class="alert alert-danger mt-4 text-center">
+            <strong>Error:</strong> {{ error_message }}
+        </div>
+    {% elif request.method == 'POST' %}
+        <div class="alert alert-success mt-4 text-center">
+            <strong>Success!</strong> Product updated successfully!
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

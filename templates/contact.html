@@ -1,0 +1,130 @@
+{% extends "base.html" %}
+
+{% block title %}Contact Us{% endblock %}
+
+{% block content %}
+<style>
+    /* Custom Styling */
+    .contact-container {
+        background-color: #f9fafb;
+        padding: 60px 15px;
+    }
+
+    .contact-header {
+        font-size: 36px;
+        font-weight: bold;
+        color: #1f2937;
+        text-align: center;
+        margin-bottom: 40px;
+    }
+
+    .card {
+        border-radius: 15px;
+        border: none;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .card-body {
+        padding: 40px;
+    }
+
+    .contact-info {
+        display: flex;
+        justify-content: space-around;
+        flex-wrap: wrap;
+    }
+
+    .contact-info-item {
+        flex: 1;
+        min-width: 250px;
+        text-align: center;
+        margin: 0 15px;
+        padding: 20px;
+    }
+
+    .contact-info-item strong {
+        display: block;
+        font-size: 20px;
+        color: #374151;
+        font-weight: 600;
+        margin-bottom: 10px;
+    }
+
+    .contact-info-item p, .contact-info-item a {
+        font-size: 16px;
+        color: #4b5563;
+        margin-bottom: 10px;
+        text-decoration: none;
+    }
+
+    .contact-info-item a:hover {
+        text-decoration: underline;
+    }
+
+    .social-icons {
+        display: flex;
+        justify-content: center;
+        margin-top: 20px;
+    }
+
+    .social-icons a {
+        width: 45px;
+        height: 45px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        margin: 0 10px;
+        color: #ffffff;
+        text-decoration: none;
+    }
+
+    .social-icons .btn-facebook {
+        background-color: #3b5998;
+    }
+
+    .social-icons .btn-twitter {
+        background-color: #1da1f2;
+    }
+
+    .social-icons .btn-instagram {
+        background-color: #c13584;
+    }
+
+    .social-icons a:hover {
+        transform: scale(1.1);
+        transition: transform 0.3s;
+    }
+</style>
+
+<div class="contact-container">
+    <h2 class="contact-header">კონტაქტი</h2>
+
+    <div class="card">
+        <div class="card-body">
+            <div class="contact-info">
+                <div class="contact-info-item">
+                    <strong><i class="fas fa-map-marker-alt"></i> მისამრთი:</strong>
+                    <p>თბილისი</p>
+                </div>
+                <div class="contact-info-item">
+                    <strong><i class="fas fa-envelope"></i> Email:</strong>
+                    <p><a href="mailto:example@example.com">aphrodite2021@inbox.ru</a></p>
+                </div>
+                <div class="contact-info-item">
+                    <strong><i class="fas fa-phone-alt"></i> ტელეფონი:</strong>
+                    <p><a href="tel:+123456789">+123 456 789</a></p>
+                </div>
+                <div class="contact-info-item">
+                    <strong><i class="fas fa-share-alt"></i> გამოგვყევით:</strong>
+                    <div class="social-icons">
+                        <a href="https://www.facebook.com/profile.php?id=100064282443128" target="_blank" class="btn-facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://twitter.com/yourpage" target="_blank" class="btn-twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="https://instagram.com/yourpage" target="_blank" class="btn-instagram"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
